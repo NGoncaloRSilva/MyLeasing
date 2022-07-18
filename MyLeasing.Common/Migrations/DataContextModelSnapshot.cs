@@ -28,13 +28,19 @@ namespace MyLeasing.Common.Migrations
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CellPhone")
+                        .HasColumnType("int");
+
                     b.Property<int>("Document")
                         .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FixedPhone")
                         .HasColumnType("int");
 
-                    b.Property<string>("OwnerName")
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
