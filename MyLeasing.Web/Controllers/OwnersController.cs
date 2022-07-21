@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MyLeasing.Common;
 using MyLeasing.Common.Data;
+using MyLeasing.Common.Helpers;
 using MyLeasing.Web.Data.Ententies;
 
 namespace MyLeasing.Web.Controllers
@@ -15,17 +12,19 @@ namespace MyLeasing.Web.Controllers
     {
         
         private readonly IOwnerRepository _ownerrepository;
+        private readonly IUserHelper _userHelper;
 
-        public OwnersController(IOwnerRepository ownerrepository)
+        public OwnersController(IOwnerRepository ownerrepository, IUserHelper userHelper)
         {
             
             _ownerrepository = ownerrepository;
+            _userHelper = userHelper;
         }
 
         // GET: Owners
         public IActionResult Index()
         {
-            return View(_ownerrepository.GetAll());
+            return View(_ownerrepository.GetAll().OrderBy(p => p.FirstName));
         }
 
         // GET: Owners/Details/5
@@ -60,6 +59,8 @@ namespace MyLeasing.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                //TODO: Modificar para o que tiver logado
+                owner.User = await _userHelper.GetUserbyEmailAsync("ngoncalorsilva@gmail.com");
                 await _ownerrepository.CreateAsync(owner);
                 return RedirectToAction(nameof(Index));
             }
@@ -98,6 +99,8 @@ namespace MyLeasing.Web.Controllers
             {
                 try
                 {
+                    //TODO: Modificar para o que tiver logado
+                    owner.User = await _userHelper.GetUserbyEmailAsync("ngoncalorsilva@gmail.com");
                     await _ownerrepository.UpdateAsync(owner);
                 }
                 catch (DbUpdateConcurrencyException)

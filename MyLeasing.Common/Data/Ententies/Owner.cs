@@ -24,9 +24,12 @@ namespace MyLeasing.Web.Data.Ententies
         public string Adress { get; set; }
 
         [Display(Name = "Owner Name")]
-        public string NomeCompleto
+
+        public string NomeCompleto()
         {
-            get { return $"{FirstName} {LastName}"; }
+            return FirstName + LastName;
         }
+
+        public User User { get; set; }
     }
 }
