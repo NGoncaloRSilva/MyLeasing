@@ -17,7 +17,8 @@ namespace MyLeasing.Common.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FixedPhone = table.Column<int>(type: "int", nullable: false),
                     CellPhone = table.Column<int>(type: "int", nullable: false),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

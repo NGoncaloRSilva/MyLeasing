@@ -30,6 +30,22 @@ namespace MyLeasing.Web.Data.Ententies
             return FirstName + LastName;
         }
 
+        [Display(Name = "Image")]
+        public string ImageUrl { get; set; }
+
+        public string ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ImageUrl))
+                {
+                    return string.Empty;
+                }
+
+                return $"https://localhost:44389{ImageUrl.Substring(1)}";
+            }
+        }
+
         public User User { get; set; }
     }
 }

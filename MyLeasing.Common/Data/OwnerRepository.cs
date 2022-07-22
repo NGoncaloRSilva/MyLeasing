@@ -1,4 +1,5 @@
-﻿using MyLeasing.Web.Data.Ententies;
+﻿using Microsoft.EntityFrameworkCore;
+using MyLeasing.Web.Data.Ententies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,16 @@ namespace MyLeasing.Common.Data
 {
     public class OwnerRepository : GenericRepository<Owner>, IOwnerRepository
     {
-        public OwnerRepository(DataContext dataContext): base(dataContext)
+        private readonly DataContext _context;
+
+        public OwnerRepository(DataContext Context): base(Context)
         {
+            _context = Context;
+        }
+
+        public IQueryable GetAllWithUsers()
+        {
+            return _context.Owners.Include(p => p.User);
         }
     }
 }

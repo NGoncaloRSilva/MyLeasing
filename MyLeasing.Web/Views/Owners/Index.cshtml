@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Document)
             </th>
             <th>
@@ -33,6 +36,12 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @if(!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                   <img src="@Url.Content(item.ImageUrl)" alt="Image" style="width:100px;height:150px;max-width:100%;height:auto"/>        
+                }
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Document)
             </td>
