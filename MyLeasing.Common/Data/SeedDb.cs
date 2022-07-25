@@ -60,11 +60,50 @@ namespace MyLeasing.Common.Data
                 await AddOwnerAsync("Rute", "Silva", "Estádio do Sporting");
                 await AddOwnerAsync("Vitoria", "Mata", "Rua da mentira 5 A");
                 await AddOwnerAsync("Tatiana", "Santos", "Av. do Camões 26");
+                await AddLesseeAsync("Luis", "Camoes", "Rua do Monstrengo");
+                await AddLesseeAsync("Luisa", "Dias", "Praceta da Noite");
+                await AddLesseeAsync("Americo", "Vasco", "Avenida da India");
+                await AddLesseeAsync("Beatriz", "Marques", "Rua da Catarina");
+                await AddLesseeAsync("Leandro", "Moreira", "Avenida do Poeta");
                 await _contex.SaveChangesAsync();
             }
 
 
 
+        }
+
+        private async Task AddLesseeAsync(string name, string name2, string name3)
+        {
+            var user = new User
+            {
+
+
+                PhoneNumber = _random.Next(910000000, 969999999).ToString(),
+                Document = _random.Next(1234567, 99999999).ToString(),
+                FirstName = name,
+                LastName = name2,
+                Address = name3,
+                Email = name + name2 + "@gmail.com",
+                UserName = name + name2 + "@gmail.com",
+            };
+
+            var result = await _userHelper.AddUserAsync(user, "123456");
+
+            if (result != IdentityResult.Success)
+            {
+                throw new InvalidOperationException("Could not create the user in seeder");
+            }
+
+            _contex.Lessees.Add(new Lessee
+            {
+                Document = Convert.ToInt32(user.Document),
+                FirstName = name,
+                LastName = name2,
+                FixedPhone = _random.Next(210000000, 239999999),
+                CellPhone = Convert.ToInt32(user.PhoneNumber),
+                Adress = name3,
+                User = user
+            });
         }
 
         private async Task AddOwnerAsync(string name, string name2, string name3)

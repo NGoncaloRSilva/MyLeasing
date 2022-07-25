@@ -1,4 +1,4 @@
-﻿using MyLeasing.Web.Data.Ententies;
+﻿using MyLeasing.Common.Data.Ententies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace MyLeasing.Common.Data
 {
-    public interface IOwnerRepository : IGenericRepository<Owner>
+    public interface ILesseeRepository : IGenericRepository<Lessee>
     {
         public IQueryable GetAllWithUsers();
 
-        Task<Owner> GetByIdAsyncWithUser(int id);
+        Task<Lessee> GetByIdAsyncWithUser(int id);
     }
-
-    
 }

@@ -1,43 +1,43 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MyLeasing.Common;
 using MyLeasing.Common.Data;
 using MyLeasing.Common.Data.Ententies;
 using MyLeasing.Common.Data.Models;
 using MyLeasing.Common.Helpers;
-using MyLeasing.Web.Data.Ententies;
-using MyLeasing.Web.Models;
 
 namespace MyLeasing.Web.Controllers
 {
-    public class OwnersController : Controller
+    public class LesseesController : Controller
     {
         
-        private readonly IOwnerRepository _ownerrepository;
+        private readonly ILesseeRepository _lesseerepository;
         private readonly IUserHelper _userHelper;
         private readonly IImageHelper _imageHelper;
         private readonly IConverterHelper _converterHelper;
 
-        public OwnersController(IOwnerRepository ownerrepository, IUserHelper userHelper, IImageHelper imageHelper,IConverterHelper converterHelper)
+        public LesseesController(ILesseeRepository lesseerepository, IUserHelper userHelper, IImageHelper imageHelper, IConverterHelper converterHelper)
         {
-            
-            _ownerrepository = ownerrepository;
+
+            _lesseerepository = lesseerepository;
             _userHelper = userHelper;
             _imageHelper = imageHelper;
             _converterHelper = converterHelper;
         }
 
-        // GET: Owners
+        // GET: Lessees
         public IActionResult Index()
         {
-            return View(_ownerrepository.GetAll().OrderBy(p => p.FirstName));
+            return View(_lesseerepository.GetAll().OrderBy(p => p.FirstName));
         }
 
-        // GET: Owners/Details/5
+        // GET: Lessees/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,27 +45,27 @@ namespace MyLeasing.Web.Controllers
                 return NotFound();
             }
 
-            var owner = await _ownerrepository.GetByIdAsync(id.Value);
-            if (owner == null)
+            var lessee = await _lesseerepository.GetByIdAsync(id.Value);
+            if (lessee == null)
             {
                 return NotFound();
             }
-
-            return View(owner);
+            
+            return View(lessee);
         }
 
-        // GET: Owners/Create
+        // GET: Lessees/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Owners/Create
+        // POST: Lessees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(OwnerViewModel model)
+        public async Task<IActionResult> Create(LesseeViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace MyLeasing.Web.Controllers
                 }
 
 
-                var owner = _converterHelper.toOwner(model, path, true);
+                var lessee = _converterHelper.toLessee(model, path, true);
 
                 var user = new User
                 {
@@ -102,16 +102,14 @@ namespace MyLeasing.Web.Controllers
                 }
 
                 //TODO: Modificar para o que tiver logado
-                owner.User = user;
-                await _ownerrepository.CreateAsync(owner);
+                lessee.User = user;
+                await _lesseerepository.CreateAsync(lessee);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        
-
-        // GET: Owners/Edit/5
+        // GET: Lessees/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -119,25 +117,22 @@ namespace MyLeasing.Web.Controllers
                 return NotFound();
             }
 
-            var owner = await _ownerrepository.GetByIdAsyncWithUser(id.Value);
-            if (owner == null)
+            var lessee = await _lesseerepository.GetByIdAsyncWithUser(id.Value);
+            if (lessee == null)
             {
                 return NotFound();
             }
-            var model = _converterHelper.toOwnerViewModel(owner);
+            var model = _converterHelper.toLesseeViewModel(lessee);
             return View(model);
         }
 
-        
-
-        // POST: Owners/Edit/5
+        // POST: Lessees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, OwnerViewModel model)
+        public async Task<IActionResult> Edit(int id, LesseeViewModel model)
         {
-            
 
             if (ModelState.IsValid)
             {
@@ -151,38 +146,18 @@ namespace MyLeasing.Web.Controllers
 
                     }
 
-                    var owner1 = await _ownerrepository.GetByIdAsyncWithUser(id);
-                    var owner = _converterHelper.toOwner(model, path, false);
-
-                    //var user = await _userHelper.GetUserbyEmailAsync(owner.FirstName + owner.LastName + "@gmail.com");
-
-                    //var user = new User
-                    //{
+                    var lessee1 = await _lesseerepository.GetByIdAsyncWithUser(id);
+                    var lessee = _converterHelper.toLessee(model, path, false);
 
 
-                    //    PhoneNumber = model.FixedPhone.ToString(),
-                    //    Document = model.Document.ToString(),
-                    //    FirstName = model.FirstName,
-                    //    LastName = model.LastName,
-                    //    Address = model.Adress,
-                    //    Email = model.FirstName + model.LastName + "@gmail.com",
-                    //    UserName = model.FirstName + model.LastName + "@gmail.com",
-                    //};
-
-                    //var result = await _userHelper.UpdateUserAsync(user);
-
-                    //if (result != IdentityResult.Success)
-                    //{
-                    //    throw new InvalidOperationException("Could not edit the user in Controller");
-                    //}
 
                     //TODO: Modificar para o que tiver logado
-                    owner.User = await _userHelper.GetUserbyEmailAsync(owner1.User.ToString());
-                    await _ownerrepository.UpdateAsync(owner);
+                    lessee.User = await _userHelper.GetUserbyEmailAsync(lessee1.User.ToString());
+                    await _lesseerepository.UpdateAsync(lessee);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await _ownerrepository.ExistAsync(model.Id))
+                    if (!await _lesseerepository.ExistAsync(model.Id))
                     {
                         return NotFound();
                     }
@@ -196,7 +171,7 @@ namespace MyLeasing.Web.Controllers
             return View(model);
         }
 
-        // GET: Owners/Delete/5
+        // GET: Lessees/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -204,40 +179,36 @@ namespace MyLeasing.Web.Controllers
                 return NotFound();
             }
 
-            var owner = await _ownerrepository.GetByIdAsyncWithUser(id.Value);
-            if (owner == null)
+            var lessee = await _lesseerepository.GetByIdAsyncWithUser(id.Value);
+            if (lessee == null)
             {
                 return NotFound();
             }
 
-            return View(owner);
+            return View(lessee);
         }
 
-        // POST: Owners/Delete/5
+        // POST: Lessees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var owner = await _ownerrepository.GetByIdAsyncWithUser(id);
+            var lessee = await _lesseerepository.GetByIdAsyncWithUser(id);
 
-            //var user = await _userHelper.GetUserbyEmailAsync(owner.FirstName + owner.LastName + "@gmail.com");
+            await _lesseerepository.DeleteAsync(lessee);
 
-            //var user = new User
-            //{
-
-            await _ownerrepository.DeleteAsync(owner);
-
-            var result = await _userHelper.DeleteUserAsync(owner.User);
+            var result = await _userHelper.DeleteUserAsync(lessee.User);
 
             if (result != IdentityResult.Success)
             {
                 throw new InvalidOperationException("Could not delete the user in Controller");
             }
 
-            
-            
+
+
             return RedirectToAction(nameof(Index));
         }
+
         
     }
 }

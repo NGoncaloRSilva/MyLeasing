@@ -21,5 +21,10 @@ namespace MyLeasing.Common.Data
         {
             return _context.Owners.Include(p => p.User);
         }
+
+        public  async Task<Owner> GetByIdAsyncWithUser(int id)
+        {
+            return await _context.Set<Owner>().Include(p => p.User).FirstOrDefaultAsync(e => e.Id == id);
+        }
     }
 }

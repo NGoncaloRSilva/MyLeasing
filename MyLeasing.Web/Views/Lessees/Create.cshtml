@@ -1,18 +1,17 @@
-﻿@model MyLeasing.Common.Data.Models.OwnerViewModel
+﻿@model MyLeasing.Common.Data.Models.LesseeViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
-<h4>Owner</h4>
+<h4>Lessee</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Document" class="control-label"></label>
                 <input asp-for="Document" class="form-control" />
@@ -49,20 +48,12 @@
                 <span asp-validation-for="Adress" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-success">Back to List</a>
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class = "btn btn-success">Back to List</a>
             </div>
         </form>
     </div>
-    <div class="col-md-4">
-        @if(!string.IsNullOrEmpty(Model.ImageUrl))
-         {
-            <img src="@Url.Content(Model.ImageUrl)" alt="Image" style="width:300px;height:450px;max-width:100%;height:auto"/>        
-         }
-    </div>
 </div>
-
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,4 +1,5 @@
-﻿using MyLeasing.Common.Data.Models;
+﻿using MyLeasing.Common.Data.Ententies;
+using MyLeasing.Common.Data.Models;
 using MyLeasing.Web.Data.Ententies;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,11 @@ namespace MyLeasing.Common.Helpers
     public interface IConverterHelper
     {
         public Owner toOwner(OwnerViewModel model, string path, bool isNew);
+
+        public Lessee toLessee(LesseeViewModel model, string path, bool isNew);
+
         public OwnerViewModel toOwnerViewModel(Owner owner);
+
+        public LesseeViewModel toLesseeViewModel(Lessee lessee);
     }
 }

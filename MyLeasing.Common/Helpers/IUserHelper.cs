@@ -16,5 +16,8 @@ namespace MyLeasing.Common.Helpers
         Task<IdentityResult> AddUserAsync(User user, string password);
 
 
+        Task<IdentityResult> UpdateUserAsync(User user);
+
+        Task<IdentityResult> DeleteUserAsync(User user);
     }
 }

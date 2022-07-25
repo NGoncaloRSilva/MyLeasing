@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyLeasing.Common.Data.Models;
+using MyLeasing.Common.Data.Ententies;
 
 namespace MyLeasing.Common.Helpers
 {
@@ -15,6 +16,23 @@ namespace MyLeasing.Common.Helpers
         public Owner toOwner(OwnerViewModel model, string path, bool isNew)
         {
             return new Owner
+            {
+
+                Document = model.Document,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                FixedPhone = model.FixedPhone,
+                CellPhone = model.CellPhone,
+                Adress = model.Adress,
+                ImageUrl = path,
+                User = model.User
+
+            };
+        }
+
+        public Lessee toLessee(LesseeViewModel model, string path, bool isNew)
+        {
+            return new Lessee
             {
 
                 Document = model.Document,
@@ -41,6 +59,21 @@ namespace MyLeasing.Common.Helpers
                 Adress = owner.Adress,
                 ImageUrl = owner.ImageUrl,
                 User = owner.User
+            };
+        }
+
+        public LesseeViewModel toLesseeViewModel(Lessee lessee)
+        {
+            return new LesseeViewModel
+            {
+                Document = lessee.Document,
+                FirstName = lessee.FirstName,
+                LastName = lessee.LastName,
+                FixedPhone = lessee.FixedPhone,
+                CellPhone = lessee.CellPhone,
+                Adress = lessee.Adress,
+                ImageUrl = lessee.ImageUrl,
+                User = lessee.User
             };
         }
     }

@@ -26,5 +26,15 @@ namespace MyLeasing.Common.Helpers
         {
             return await _userManager.FindByEmailAsync(email);
         }
+
+        public async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<IdentityResult> DeleteUserAsync(User user)
+        {
+            return await _userManager.DeleteAsync(user);
+        }
     }
 }

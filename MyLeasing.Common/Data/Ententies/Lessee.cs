@@ -1,9 +1,13 @@
-﻿using MyLeasing.Common.Data.Ententies;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MyLeasing.Web.Data.Ententies
+namespace MyLeasing.Common.Data.Ententies
 {
-    public class Owner : IEntity
+    public class Lessee : IEntity
     {
         public int Id { get; set; }
 
@@ -25,7 +29,10 @@ namespace MyLeasing.Web.Data.Ententies
 
         [Display(Name = "Owner Name")]
 
-        public string FullName => $"{FirstName} {LastName}";
+        public string NomeCompleto()
+        {
+            return FirstName + LastName;
+        }
 
         [Display(Name = "Image")]
         public string ImageUrl { get; set; }
@@ -42,6 +49,10 @@ namespace MyLeasing.Web.Data.Ententies
                 return $"https://localhost:44389{ImageUrl.Substring(1)}";
             }
         }
+
+        public string FullName => $"{FirstName} {LastName}";
+
+        public string FullNameWithDocument => $"{FirstName} {LastName} -{Document}";
 
         public User User { get; set; }
     }
