@@ -46,7 +46,7 @@ namespace MyLeasing.Common.Data.Ententies
                     return string.Empty;
                 }
 
-                return $"https://localhost:44389{ImageUrl.Substring(1)}";
+                return $"https://myleasingweb20220901181751.azurewebsites.net{ImageUrl.Substring(1)}";
             }
         }
 
