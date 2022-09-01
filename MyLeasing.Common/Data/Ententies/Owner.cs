@@ -1,4 +1,5 @@
 ﻿using MyLeasing.Common.Data.Ententies;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyLeasing.Web.Data.Ententies
@@ -28,20 +29,11 @@ namespace MyLeasing.Web.Data.Ententies
         public string FullName => $"{FirstName} {LastName}";
 
         [Display(Name = "Image")]
-        public string ImageUrl { get; set; }
+        public Guid ImageId { get; set; }
+        
 
-        public string ImageFullPath
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(ImageUrl))
-                {
-                    return string.Empty;
-                }
-
-                return $"https://myleasingweb20220901181751.azurewebsites.net{ImageUrl.Substring(1)}";
-            }
-        }
+        public string ImageFullPath => ImageId == Guid.Empty ? $"https://myleasingweb20220901181751.azurewebsites.net/images/noimage.png"
+            : $"https://myleasingngrs.blob.core.windows.net/owners/{ImageId}";
 
         public User User { get; set; }
     }

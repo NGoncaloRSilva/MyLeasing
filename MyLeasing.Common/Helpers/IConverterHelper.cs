@@ -11,9 +11,9 @@ namespace MyLeasing.Common.Helpers
 {
     public interface IConverterHelper
     {
-        public Owner toOwner(OwnerViewModel model, string path, bool isNew);
+        public Owner toOwner(OwnerViewModel model, Guid imageId, bool isNew);
 
-        public Lessee toLessee(LesseeViewModel model, string path, bool isNew);
+        public Lessee toLessee(LesseeViewModel model, Guid imageId, bool isNew);
 
         public OwnerViewModel toOwnerViewModel(Owner owner);
 

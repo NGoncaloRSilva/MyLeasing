@@ -6,11 +6,11 @@ namespace MyLeasing.Common.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ImageUrl",
-                table: "Owners",
-                type: "nvarchar(max)",
-                nullable: true);
+            //migrationBuilder.AddColumn<string>(
+            //    name: "ImageUrl",
+            //    table: "Owners",
+            //    type: "nvarchar(max)",
+            //    nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "ImageUrl",
@@ -55,9 +55,9 @@ namespace MyLeasing.Common.Migrations
             migrationBuilder.DropTable(
                 name: "Lessees");
 
-            migrationBuilder.DropColumn(
-                name: "ImageUrl",
-                table: "Owners");
+            //migrationBuilder.DropColumn(
+            //    name: "ImageUrl",
+            //    table: "Owners");
 
             migrationBuilder.DropColumn(
                 name: "ImageUrl",

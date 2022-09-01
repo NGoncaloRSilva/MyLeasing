@@ -13,7 +13,7 @@ namespace MyLeasing.Common.Helpers
     public class ConverterHelper : IConverterHelper
     {
 
-        public Owner toOwner(OwnerViewModel model, string path, bool isNew)
+        public Owner toOwner(OwnerViewModel model,  Guid imageId, bool isNew)
         {
             return new Owner
             {
@@ -24,13 +24,13 @@ namespace MyLeasing.Common.Helpers
                 FixedPhone = model.FixedPhone,
                 CellPhone = model.CellPhone,
                 Adress = model.Adress,
-                ImageUrl = path,
+                ImageId = imageId,
                 User = model.User
 
             };
         }
 
-        public Lessee toLessee(LesseeViewModel model, string path, bool isNew)
+        public Lessee toLessee(LesseeViewModel model, Guid imageId, bool isNew)
         {
             return new Lessee
             {
@@ -41,7 +41,7 @@ namespace MyLeasing.Common.Helpers
                 FixedPhone = model.FixedPhone,
                 CellPhone = model.CellPhone,
                 Adress = model.Adress,
-                ImageUrl = path,
+                ImageId = imageId,
                 User = model.User
 
             };
@@ -57,7 +57,7 @@ namespace MyLeasing.Common.Helpers
                 FixedPhone = owner.FixedPhone,
                 CellPhone = owner.CellPhone,
                 Adress = owner.Adress,
-                ImageUrl = owner.ImageUrl,
+                ImageId = owner.ImageId,
                 User = owner.User
             };
         }
@@ -72,7 +72,7 @@ namespace MyLeasing.Common.Helpers
                 FixedPhone = lessee.FixedPhone,
                 CellPhone = lessee.CellPhone,
                 Adress = lessee.Adress,
-                ImageUrl = lessee.ImageUrl,
+                ImageId = lessee.ImageId,
                 User = lessee.User
             };
         }
