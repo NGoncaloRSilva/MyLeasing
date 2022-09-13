@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MyLeasing.Web.Controllers
 {
+    
     public class OwnersController : Controller
     {
         
@@ -56,6 +58,7 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: Owners/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -111,9 +114,10 @@ namespace MyLeasing.Web.Controllers
             return View(model);
         }
 
-        
+
 
         // GET: Owners/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -203,6 +207,7 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: Owners/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

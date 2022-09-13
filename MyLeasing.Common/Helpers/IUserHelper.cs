@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MyLeasing.Common.Data.Ententies;
+using MyLeasing.Common.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,8 @@ namespace MyLeasing.Common.Helpers
         Task<IdentityResult> UpdateUserAsync(User user);
 
         Task<IdentityResult> DeleteUserAsync(User user);
+
+        Task<SignInResult> LoginAsync(LoginViewModel model);
+        Task LogoutAsync();
     }
 }
