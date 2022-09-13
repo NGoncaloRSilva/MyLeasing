@@ -87,35 +87,35 @@ namespace MyLeasing.Web.Controllers
 
                 var lessee = _converterHelper.toLessee(model, imageId, true);
 
-                var user = new User
-                {
+                //var user = new User
+                //{
 
 
-                    PhoneNumber = model.FixedPhone.ToString(),
-                    Document = model.Document.ToString(),
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Address = model.Adress,
-                    Email = model.FirstName + model.LastName + "@gmail.com",
-                    UserName = model.FirstName + model.LastName + "@gmail.com",
-                };
+                //    PhoneNumber = model.FixedPhone.ToString(),
+                //    Document = model.Document.ToString(),
+                //    FirstName = model.FirstName,
+                //    LastName = model.LastName,
+                //    Address = model.Adress,
+                //    Email = model.FirstName + model.LastName + "@gmail.com",
+                //    UserName = model.FirstName + model.LastName + "@gmail.com",
+                //};
 
-                var result = await _userHelper.AddUserAsync(user, "123456");
+                //var result = await _userHelper.AddUserAsync(user, "123456");
 
-                if (result != IdentityResult.Success)
-                {
-                    throw new InvalidOperationException("Could not create the user in Controller");
-                }
+                //if (result != IdentityResult.Success)
+                //{
+                //    throw new InvalidOperationException("Could not create the user in Controller");
+                //}
 
                 //TODO: Modificar para o que tiver logado
-                lessee.User = user;
+                lessee.User = await _userHelper.GetUserbyEmailAsync("ngoncalorsilva@gmail.com");
                 await _lesseerepository.CreateAsync(lessee);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        // GET: Lessees/Edit/5
+        // GET: Lessee/Edit/5
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -124,7 +124,7 @@ namespace MyLeasing.Web.Controllers
                 return NotFound();
             }
 
-            var lessee = await _lesseerepository.GetByIdAsyncWithUser(id.Value);
+            var lessee = await _lesseerepository.GetByIdAsync(id.Value);
             if (lessee == null)
             {
                 return NotFound();
@@ -141,6 +141,7 @@ namespace MyLeasing.Web.Controllers
         public async Task<IActionResult> Edit(int id, LesseeViewModel model)
         {
 
+
             if (ModelState.IsValid)
             {
                 try
@@ -149,19 +150,15 @@ namespace MyLeasing.Web.Controllers
 
                     if (model.ImageFile != null && model.ImageFile.Length > 0)
                     {
-
-
-                        imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "lessees");
+                        imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
 
                     }
 
-                    var lessee1 = await _lesseerepository.GetByIdAsyncWithUser(id);
+
                     var lessee = _converterHelper.toLessee(model, imageId, false);
 
-
-
                     //TODO: Modificar para o que tiver logado
-                    lessee.User = await _userHelper.GetUserbyEmailAsync(lessee1.User.ToString());
+                    lessee.User = await _userHelper.GetUserbyEmailAsync("ngoncalorsilva@gmail.com");
                     await _lesseerepository.UpdateAsync(lessee);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -189,7 +186,7 @@ namespace MyLeasing.Web.Controllers
                 return NotFound();
             }
 
-            var lessee = await _lesseerepository.GetByIdAsyncWithUser(id.Value);
+            var lessee = await _lesseerepository.GetByIdAsync(id.Value);
             if (lessee == null)
             {
                 return NotFound();
@@ -203,18 +200,16 @@ namespace MyLeasing.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lessee = await _lesseerepository.GetByIdAsyncWithUser(id);
+            var lessee = await _lesseerepository.GetByIdAsync(id);
 
             await _lesseerepository.DeleteAsync(lessee);
 
-            var result = await _userHelper.DeleteUserAsync(lessee.User);
+            //var result = await _userHelper.DeleteUserAsync(lessee.User);
 
-            if (result != IdentityResult.Success)
-            {
-                throw new InvalidOperationException("Could not delete the user in Controller");
-            }
-
-
+            //if (result != IdentityResult.Success)
+            //{
+            //    throw new InvalidOperationException("Could not delete the user in Controller");
+            //}
 
             return RedirectToAction(nameof(Index));
         }

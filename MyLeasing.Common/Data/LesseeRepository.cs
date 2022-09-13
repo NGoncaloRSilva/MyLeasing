@@ -22,9 +22,9 @@ namespace MyLeasing.Common.Data
             return _context.Lessees.Include(p => p.User);
         }
 
-        public async Task<Lessee> GetByIdAsyncWithUser(int id)
-        {
-            return await _context.Set<Lessee>().Include(p => p.User).FirstOrDefaultAsync(e => e.Id == id);
-        }
+        //public async Task<Lessee> GetByIdAsyncWithUser(int id)
+        //{
+        //    return await _context.Set<Lessee>().Include(p => p.User).FirstOrDefaultAsync(e => e.Id == id);
+        //}
     }
 }

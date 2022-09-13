@@ -86,28 +86,28 @@ namespace MyLeasing.Web.Controllers
 
                 var owner = _converterHelper.toOwner(model, imageId, true);
 
-                var user = new User
-                {
+                //var user = new User
+                //{
 
 
-                    PhoneNumber = model.FixedPhone.ToString(),
-                    Document = model.Document.ToString(),
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Address = model.Adress,
-                    Email = model.FirstName + model.LastName + "@gmail.com",
-                    UserName = model.FirstName + model.LastName + "@gmail.com",
-                };
+                //    PhoneNumber = model.FixedPhone.ToString(),
+                //    Document = model.Document.ToString(),
+                //    FirstName = model.FirstName,
+                //    LastName = model.LastName,
+                //    Address = model.Adress,
+                //    Email = model.FirstName + model.LastName + "@gmail.com",
+                //    UserName = model.FirstName + model.LastName + "@gmail.com",
+                //};
 
-                var result = await _userHelper.AddUserAsync(user, "123456");
+                //var result = await _userHelper.AddUserAsync(user, "123456");
 
-                if (result != IdentityResult.Success)
-                {
-                    throw new InvalidOperationException("Could not create the user in Controller");
-                }
+                //if (result != IdentityResult.Success)
+                //{
+                //    throw new InvalidOperationException("Could not create the user in Controller");
+                //}
 
                 //TODO: Modificar para o que tiver logado
-                owner.User = user;
+                owner.User = await _userHelper.GetUserbyEmailAsync(this.User.Identity.Name);
                 await _ownerrepository.CreateAsync(owner);
                 return RedirectToAction(nameof(Index));
             }
@@ -125,7 +125,7 @@ namespace MyLeasing.Web.Controllers
                 return NotFound();
             }
 
-            var owner = await _ownerrepository.GetByIdAsyncWithUser(id.Value);
+            var owner = await _ownerrepository.GetByIdAsync(id.Value);
             if (owner == null)
             {
                 return NotFound();
@@ -161,33 +161,13 @@ namespace MyLeasing.Web.Controllers
 
                     }
 
-                    var owner1 = await _ownerrepository.GetByIdAsyncWithUser(id);
+                    //var owner1 = await _ownerrepository.GetByIdAsync(id);
                     var owner = _converterHelper.toOwner(model, imageId, false);
 
-                    //var user = await _userHelper.GetUserbyEmailAsync(owner.FirstName + owner.LastName + "@gmail.com");
-
-                    //var user = new User
-                    //{
-
-
-                    //    PhoneNumber = model.FixedPhone.ToString(),
-                    //    Document = model.Document.ToString(),
-                    //    FirstName = model.FirstName,
-                    //    LastName = model.LastName,
-                    //    Address = model.Adress,
-                    //    Email = model.FirstName + model.LastName + "@gmail.com",
-                    //    UserName = model.FirstName + model.LastName + "@gmail.com",
-                    //};
-
-                    //var result = await _userHelper.UpdateUserAsync(user);
-
-                    //if (result != IdentityResult.Success)
-                    //{
-                    //    throw new InvalidOperationException("Could not edit the user in Controller");
-                    //}
+                    
 
                     //TODO: Modificar para o que tiver logado
-                    owner.User = await _userHelper.GetUserbyEmailAsync(owner1.User.ToString());
+                    owner.User = await _userHelper.GetUserbyEmailAsync(this.User.Identity.Name);
                     await _ownerrepository.UpdateAsync(owner);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -215,7 +195,7 @@ namespace MyLeasing.Web.Controllers
                 return NotFound();
             }
 
-            var owner = await _ownerrepository.GetByIdAsyncWithUser(id.Value);
+            var owner = await _ownerrepository.GetByIdAsync(id.Value);
             if (owner == null)
             {
                 return NotFound();
@@ -229,24 +209,17 @@ namespace MyLeasing.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var owner = await _ownerrepository.GetByIdAsyncWithUser(id);
-
-            //var user = await _userHelper.GetUserbyEmailAsync(owner.FirstName + owner.LastName + "@gmail.com");
-
-            //var user = new User
-            //{
+            var owner = await _ownerrepository.GetByIdAsync(id);
 
             await _ownerrepository.DeleteAsync(owner);
 
-            var result = await _userHelper.DeleteUserAsync(owner.User);
+            //var result = await _userHelper.DeleteUserAsync(owner.User);
 
-            if (result != IdentityResult.Success)
-            {
-                throw new InvalidOperationException("Could not delete the user in Controller");
-            }
+            //if (result != IdentityResult.Success)
+            //{
+            //    throw new InvalidOperationException("Could not delete the user in Controller");
+            //}
 
-            
-            
             return RedirectToAction(nameof(Index));
         }
         

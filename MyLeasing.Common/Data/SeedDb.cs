@@ -50,21 +50,21 @@ namespace MyLeasing.Common.Data
             if (!_contex.Owners.Any())
             {
                 
-                await AddOwnerAsync("Joao","Rodrigues","Rua da verdade verdadinha 21 A");
-                await AddOwnerAsync("Maria","Calhas", "Av. da Liberdade 22");
-                await AddOwnerAsync("Maria","Lopes", "Travessa das Flores 1");
-                await AddOwnerAsync("Rui","Costa", "Estádio da Luz");
-                await AddOwnerAsync("Joana", "Sousa", "Rua da verdade verdadinha 23 B");
-                await AddOwnerAsync("Mario", "Carreto", "Av. da Liberdade 42");
-                await AddOwnerAsync("Mario", "Santana", "Travessa das Flores 6");
-                await AddOwnerAsync("Rute", "Silva", "Estádio do Sporting");
-                await AddOwnerAsync("Vitoria", "Mata", "Rua da mentira 5 A");
-                await AddOwnerAsync("Tatiana", "Santos", "Av. do Camões 26");
-                await AddLesseeAsync("Luis", "Camoes", "Rua do Monstrengo");
-                await AddLesseeAsync("Luisa", "Dias", "Praceta da Noite");
-                await AddLesseeAsync("Americo", "Vasco", "Avenida da India");
-                await AddLesseeAsync("Beatriz", "Marques", "Rua da Catarina");
-                await AddLesseeAsync("Leandro", "Moreira", "Avenida do Poeta");
+                AddOwnerAsync("Joao","Rodrigues","Rua da verdade verdadinha 21 A",user);
+                AddOwnerAsync("Maria","Calhas", "Av. da Liberdade 22", user);
+                AddOwnerAsync("Maria","Lopes", "Travessa das Flores 1", user);
+                AddOwnerAsync("Rui","Costa", "Estádio da Luz", user);
+                AddOwnerAsync("Joana", "Sousa", "Rua da verdade verdadinha 23 B", user);
+                AddOwnerAsync("Mario", "Carreto", "Av. da Liberdade 42", user);
+                AddOwnerAsync("Mario", "Santana", "Travessa das Flores 6", user);
+                AddOwnerAsync("Rute", "Silva", "Estádio do Sporting", user);
+                AddOwnerAsync("Vitoria", "Mata", "Rua da mentira 5 A", user);
+                AddOwnerAsync("Tatiana", "Santos", "Av. do Camões 26", user);
+                AddLesseeAsync("Luis", "Camoes", "Rua do Monstrengo", user);
+                AddLesseeAsync("Luisa", "Dias", "Praceta da Noite", user);
+                AddLesseeAsync("Americo", "Vasco", "Avenida da India", user);
+                AddLesseeAsync("Beatriz", "Marques", "Rua da Catarina", user);
+                AddLesseeAsync("Leandro", "Moreira", "Avenida do Poeta", user);
                 await _contex.SaveChangesAsync();
             }
 
@@ -72,69 +72,69 @@ namespace MyLeasing.Common.Data
 
         }
 
-        private async Task AddLesseeAsync(string name, string name2, string name3)
+        private void AddLesseeAsync(string name, string name2, string name3, User user)
         {
-            var user = new User
-            {
+            //var user = new User
+            //{
 
 
-                PhoneNumber = _random.Next(910000000, 969999999).ToString(),
-                Document = _random.Next(1234567, 99999999).ToString(),
-                FirstName = name,
-                LastName = name2,
-                Address = name3,
-                Email = name + name2 + "@gmail.com",
-                UserName = name + name2 + "@gmail.com",
-            };
+            //    PhoneNumber = _random.Next(910000000, 969999999).ToString(),
+            //    Document = _random.Next(1234567, 99999999).ToString(),
+            //    FirstName = name,
+            //    LastName = name2,
+            //    Address = name3,
+            //    Email = name + name2 + "@gmail.com",
+            //    UserName = name + name2 + "@gmail.com",
+            //};
 
-            var result = await _userHelper.AddUserAsync(user, "123456");
+            //var result = await _userHelper.AddUserAsync(user, "123456");
 
-            if (result != IdentityResult.Success)
-            {
-                throw new InvalidOperationException("Could not create the user in seeder");
-            }
+            //if (result != IdentityResult.Success)
+            //{
+            //    throw new InvalidOperationException("Could not create the user in seeder");
+            //}
 
             _contex.Lessees.Add(new Lessee
             {
-                Document = Convert.ToInt32(user.Document),
+                Document = /*Convert.ToInt32(user.Document)*/_random.Next(1234567, 99999999).ToString(),
                 FirstName = name,
                 LastName = name2,
                 FixedPhone = _random.Next(210000000, 239999999),
-                CellPhone = Convert.ToInt32(user.PhoneNumber),
+                CellPhone = /*Convert.ToInt32(user.PhoneNumber)*/_random.Next(910000000, 969999999).ToString(),
                 Adress = name3,
                 User = user
             });
         }
 
-        private async Task AddOwnerAsync(string name, string name2, string name3)
+        private void AddOwnerAsync(string name, string name2, string name3, User user)
         {
-            var user = new User
-            {
+            //var user = new User
+            //{
                 
                 
-                PhoneNumber = _random.Next(910000000, 969999999).ToString(),
-                Document = _random.Next(1234567, 99999999).ToString(),
-                FirstName = name,
-                LastName = name2,
-                Address = name3,
-                Email = name + name2 + "@gmail.com",
-                UserName = name + name2 + "@gmail.com",
-            };
+            //    PhoneNumber = _random.Next(910000000, 969999999).ToString(),
+            //    Document = _random.Next(1234567, 99999999).ToString(),
+            //    FirstName = name,
+            //    LastName = name2,
+            //    Address = name3,
+            //    Email = name + name2 + "@gmail.com",
+            //    UserName = name + name2 + "@gmail.com",
+            //};
 
-            var result = await _userHelper.AddUserAsync(user, "123456");
+            //var result = await _userHelper.AddUserAsync(user, "123456");
 
-            if (result != IdentityResult.Success)
-            {
-                throw new InvalidOperationException("Could not create the user in seeder");
-            }
+            //if (result != IdentityResult.Success)
+            //{
+            //    throw new InvalidOperationException("Could not create the user in seeder");
+            //}
 
             _contex.Owners.Add(new Owner
             {
-                Document = Convert.ToInt32(user.Document),
+                Document = /*Convert.ToInt32(user.Document)*/_random.Next(1234567, 99999999).ToString(),
                 FirstName = name,
                 LastName = name2,
                 FixedPhone = _random.Next(210000000, 239999999),
-                CellPhone = Convert.ToInt32(user.PhoneNumber),
+                CellPhone = /*Convert.ToInt32(user.PhoneNumber)*/_random.Next(910000000, 969999999).ToString(),
                 Adress = name3,
                 User = user
             });

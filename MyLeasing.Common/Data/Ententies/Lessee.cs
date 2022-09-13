@@ -11,7 +11,7 @@ namespace MyLeasing.Common.Data.Ententies
     {
         public int Id { get; set; }
 
-        public int Document { get; set; }
+        public string Document { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -23,7 +23,7 @@ namespace MyLeasing.Common.Data.Ententies
         public int FixedPhone { get; set; }
 
         [Display(Name = "Cell Phone")]
-        public int CellPhone { get; set; }
+        public string CellPhone { get; set; }
 
         public string Adress { get; set; }
 

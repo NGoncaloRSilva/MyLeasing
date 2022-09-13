@@ -11,6 +11,6 @@ namespace MyLeasing.Common.Data
     {
         public IQueryable GetAllWithUsers();
 
-        Task<Lessee> GetByIdAsyncWithUser(int id);
+        //Task<Lessee> GetByIdAsyncWithUser(int id);
     }
 }
