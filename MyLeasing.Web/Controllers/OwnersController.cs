@@ -58,7 +58,7 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: Owners/Create
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();

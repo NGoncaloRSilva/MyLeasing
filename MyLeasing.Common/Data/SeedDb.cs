@@ -25,6 +25,10 @@ namespace MyLeasing.Common.Data
         {
             await _contex.Database.EnsureCreatedAsync();
 
+            await _userHelper.CheckRoleAsync("Admin");
+            await _userHelper.CheckRoleAsync("Owner");
+            await _userHelper.CheckRoleAsync("Lessee");
+
             var user = await _userHelper.GetUserbyEmailAsync("ngoncalorsilva@gmail.com");
 
             if (user == null)
@@ -46,10 +50,53 @@ namespace MyLeasing.Common.Data
                 {
                     throw new InvalidOperationException("Could not create the user in seeder");
                 }
+
+                await _userHelper.AddUserToRoleAsync(user, "Admin");
             }
+
+            var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");
+
+            if (!isInRole)
+            {
+                await _userHelper.AddUserToRoleAsync(user, "Admin");
+            }
+
+            //Criação customer
+
+            var user2 = await _userHelper.GetUserbyEmailAsync("joaoricardo@gmail.com");
+            if (user2 == null)
+            {
+                user2 = new User
+                {
+                    Document = "864897762",
+                    FirstName = "Joao",
+                    LastName = "Ricardo",
+                    Email = "joaoricardo@gmail.com",
+                    UserName = "joaoricardo@gmail.com",
+                    PhoneNumber = "212344555",
+                    Address = "Rua do Cinel 321"
+                };
+
+                var result = await _userHelper.AddUserAsync(user2, "123456");
+
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create the user in seeder");
+                }
+
+                await _userHelper.AddUserToRoleAsync(user2, "Owner");
+            }
+
+            var isInRole2 = await _userHelper.IsUserInRoleAsync(user, "Owner");
+
+            if (!isInRole2)
+            {
+                await _userHelper.AddUserToRoleAsync(user2, "Owner");
+            }
+
             if (!_contex.Owners.Any())
             {
-                
+                AddOwnerAsync("Nuno", "Silva", "Cinel", user);
                 AddOwnerAsync("Joao","Rodrigues","Rua da verdade verdadinha 21 A",user);
                 AddOwnerAsync("Maria","Calhas", "Av. da Liberdade 22", user);
                 AddOwnerAsync("Maria","Lopes", "Travessa das Flores 1", user);
