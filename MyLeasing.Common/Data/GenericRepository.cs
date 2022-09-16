@@ -56,5 +56,7 @@ namespace MyLeasing.Common.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+
     }
 }
