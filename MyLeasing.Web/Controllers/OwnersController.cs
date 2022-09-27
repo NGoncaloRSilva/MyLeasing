@@ -45,13 +45,13 @@ namespace MyLeasing.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             var owner = await _ownerrepository.GetByIdAsync(id.Value);
             if (owner == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             return View(owner);
@@ -122,13 +122,13 @@ namespace MyLeasing.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             var owner = await _ownerrepository.GetByIdAsync(id.Value);
             if (owner == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
             var model = _converterHelper.toOwnerViewModel(owner);
             return View(model);
@@ -174,7 +174,7 @@ namespace MyLeasing.Web.Controllers
                 {
                     if (!await _ownerrepository.ExistAsync(model.Id))
                     {
-                        return NotFound();
+                        return new NotFoundViewResult("ProductNotFound");
                     }
                     else
                     {
@@ -192,13 +192,13 @@ namespace MyLeasing.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             var owner = await _ownerrepository.GetByIdAsync(id.Value);
             if (owner == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             return View(owner);
@@ -222,6 +222,11 @@ namespace MyLeasing.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
+        public IActionResult OwnerNotFound()
+        {
+            return View();
+        }
+
     }
 }

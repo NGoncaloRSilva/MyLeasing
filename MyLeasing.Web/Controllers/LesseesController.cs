@@ -12,6 +12,7 @@ using MyLeasing.Common.Data;
 using MyLeasing.Common.Data.Ententies;
 using MyLeasing.Common.Data.Models;
 using MyLeasing.Common.Helpers;
+using MyLeasing.Web.Models;
 
 namespace MyLeasing.Web.Controllers
 {
@@ -44,13 +45,13 @@ namespace MyLeasing.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("LesseeNotFound");
             }
 
             var lessee = await _lesseerepository.GetByIdAsync(id.Value);
             if (lessee == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("LesseeNotFound");
             }
             
             return View(lessee);
@@ -121,13 +122,13 @@ namespace MyLeasing.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("LesseeNotFound");
             }
 
             var lessee = await _lesseerepository.GetByIdAsync(id.Value);
             if (lessee == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("LesseeNotFound");
             }
             var model = _converterHelper.toLesseeViewModel(lessee);
             return View(model);
@@ -165,7 +166,7 @@ namespace MyLeasing.Web.Controllers
                 {
                     if (!await _lesseerepository.ExistAsync(model.Id))
                     {
-                        return NotFound();
+                        return new NotFoundViewResult("LesseeNotFound");
                     }
                     else
                     {
@@ -183,13 +184,13 @@ namespace MyLeasing.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("LesseeNotFound");
             }
 
             var lessee = await _lesseerepository.GetByIdAsync(id.Value);
             if (lessee == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("LesseeNotFound");
             }
 
             return View(lessee);
@@ -214,6 +215,11 @@ namespace MyLeasing.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+        public IActionResult LesseeNotFound()
+        {
+            return View();
+        }
+
+
     }
 }
